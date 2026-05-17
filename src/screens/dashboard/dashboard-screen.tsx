@@ -46,6 +46,13 @@ import type { AnalyticsPeriod } from './components/analytics-chart-card'
 import type { ReactNode } from 'react'
 import type { ClaudeSession } from '@/server/claude-api'
 import type { DashboardOverview } from '@/server/dashboard-aggregator'
+import {
+  PlatformStatusCard,
+  McpPanelCard,
+  CronPanelCard,
+  PersonaChipsCard,
+  ZapierActionsCard,
+} from './components/hermes-os'
 import { getUnavailableReason } from '@/lib/feature-gates'
 import { cn } from '@/lib/utils'
 import { applyTheme, useSettingsStore } from '@/hooks/use-settings'
@@ -1193,6 +1200,26 @@ export function DashboardScreen() {
                 sessions={sessionRows}
               />
             </WidgetShell>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Hermes OS: Personal stack status ── */}
+      <div className="mt-3">
+        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--theme-muted)]">
+          Hermes OS
+        </h3>
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <div className="flex flex-col gap-3">
+            <PlatformStatusCard />
+            <PersonaChipsCard />
+          </div>
+          <div className="flex flex-col gap-3">
+            <McpPanelCard />
+            <ZapierActionsCard />
+          </div>
+          <div>
+            <CronPanelCard />
           </div>
         </div>
       </div>
