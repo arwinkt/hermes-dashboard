@@ -29,6 +29,13 @@ import { CacheEfficiencyCard } from './components/cache-efficiency-card'
 import { CostLedgerCard } from './components/cost-ledger-card'
 import { EditModePanel } from './components/edit-mode-panel'
 import { HeroMetrics } from './components/hero-metrics'
+import {
+  CronPanelCard,
+  McpPanelCard,
+  PersonaChipsCard,
+  PlatformStatusCard,
+  ZapierActionsCard,
+} from './components/hermes-os'
 import { LogsTailCard } from './components/logs-tail-card'
 import { OperatorTipCard } from './components/operator-tip-card'
 import { OpsStrip } from './components/ops-strip'
@@ -1193,6 +1200,26 @@ export function DashboardScreen() {
                 sessions={sessionRows}
               />
             </WidgetShell>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Hermes OS: Personal stack status ── */}
+      <div className="mt-3">
+        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-[var(--theme-muted)]">
+          Hermes OS
+        </h3>
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <div className="flex flex-col gap-3">
+            <PlatformStatusCard />
+            <PersonaChipsCard />
+          </div>
+          <div className="flex flex-col gap-3">
+            <McpPanelCard />
+            <ZapierActionsCard />
+          </div>
+          <div>
+            <CronPanelCard />
           </div>
         </div>
       </div>
