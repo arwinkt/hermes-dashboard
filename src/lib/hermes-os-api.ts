@@ -14,7 +14,7 @@ export type PlatformInfo = {
 
 export type GatewayHealth = {
   status: string
-  platform: string
+  platform: string      // e.g. "hermes-agent" — the gateway platform identifier
   gateway_state: string
   platforms: Record<string, PlatformInfo>
   active_agents: number
@@ -27,6 +27,8 @@ export type CronSchedule = {
   expr: string
   display: string
 }
+
+export type PersonaColor = 'violet' | 'blue' | 'green' | 'amber' | 'purple'
 
 export type CronJob = {
   id: string
@@ -45,7 +47,11 @@ async function gatewayGet<T>(path: string): Promise<T | null> {
     const res = await fetch(`${GATEWAY}${path}`, {
       signal: AbortSignal.timeout(5_000),
     })
-    return res.ok ? (res.json() as Promise<T>) : null
+    if (!res.ok) {
+      console.error(`[hermes-os] gateway ${res.status} ${res.statusText} on ${path}`)
+      return null
+    }
+    return (await res.json()) as T
   } catch {
     return null
   }
@@ -63,8 +69,8 @@ export async function getCronJobs(): Promise<CronJob[]> {
 // MCP servers — static: gateway has no MCP registry endpoint.
 // These match the confirmed running state (Obsidian 14 + Zapier 14).
 export const MCP_SERVERS = [
-  { name: 'obsidian', tool_count: 14, status: 'connected' as const },
-  { name: 'zapier', tool_count: 14, status: 'connected' as const },
+  { name: 'obsidian', tool_count: 14 },
+  { name: 'zapier', tool_count: 14 },
 ] as const
 
 // Zapier apps — static: browser-context MCP client not available.
@@ -75,10 +81,10 @@ export const ZAPIER_APPS = [
 ] as const
 
 // Pantheon personas — static config.
-export const PANTHEON_PERSONAS = [
+export const PANTHEON_PERSONAS: readonly { name: string; color: PersonaColor }[] = [
   { name: 'Labyrinth', color: 'violet' },
   { name: 'Mercury', color: 'blue' },
   { name: 'Oracle', color: 'green' },
   { name: 'Philosopher', color: 'amber' },
   { name: 'Hermes_EM', color: 'purple' },
-] as const
+]
