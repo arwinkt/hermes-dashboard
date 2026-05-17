@@ -13,7 +13,7 @@ const PLATFORM_LABELS: Record<string, string> = {
 }
 
 export function PlatformStatusCard() {
-  const { data: health } = useQuery({
+  const { data: health, isPending } = useQuery({
     queryKey: ['hermes-os', 'gateway-health'],
     queryFn: getGatewayHealth,
     refetchInterval: 30_000,
@@ -37,14 +37,16 @@ export function PlatformStatusCard() {
               <span
                 className={cn(
                   'text-xs font-semibold',
-                  health === null
+                  isPending
                     ? 'text-[var(--theme-muted)]'
-                    : connected
-                      ? 'text-green-400'
-                      : 'text-[var(--theme-muted)]',
+                    : health === null
+                      ? 'text-[var(--theme-muted)]'
+                      : connected
+                        ? 'text-green-400'
+                        : 'text-[var(--theme-muted)]',
                 )}
               >
-                {health === null ? '—' : connected ? '● LIVE' : '○ OFF'}
+                {isPending ? '…' : health === null ? '—' : connected ? '● LIVE' : '○ OFF'}
               </span>
             </div>
           )

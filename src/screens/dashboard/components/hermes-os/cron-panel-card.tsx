@@ -27,7 +27,8 @@ export function CronPanelCard() {
     staleTime: 60_000,
   })
 
-  const list = jobs?.length ? jobs : CRON_FALLBACK
+  // undefined = still loading → show fallback; [] = API returned empty (rare but valid) → show empty
+  const list = jobs ?? CRON_FALLBACK
 
   return (
     <HermesCard title="Cron Jobs">
