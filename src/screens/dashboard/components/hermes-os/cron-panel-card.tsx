@@ -13,7 +13,10 @@ const CRON_FALLBACK = [
 
 function formatLastRun(ts: string | null): string {
   if (!ts) return '—'
-  const diff = Date.now() - new Date(ts).getTime()
+  const t = new Date(ts).getTime()
+  if (isNaN(t)) return '—'
+  const diff = Date.now() - t
+  if (diff < 0) return 'just now'
   const hours = Math.floor(diff / 3_600_000)
   if (hours < 1) return 'just now'
   if (hours < 24) return `${hours}h ago`

@@ -52,7 +52,10 @@ async function gatewayGet<T>(path: string): Promise<T | null> {
       return null
     }
     return (await res.json()) as T
-  } catch {
+  } catch (err) {
+    if (err instanceof Error && err.name !== 'AbortError') {
+      console.error(`[hermes-os] fetch error on ${path}:`, err)
+    }
     return null
   }
 }
@@ -63,7 +66,8 @@ export async function getGatewayHealth(): Promise<GatewayHealth | null> {
 
 export async function getCronJobs(): Promise<CronJob[]> {
   const data = await gatewayGet<{ jobs: CronJob[] }>('/api/jobs')
-  return data?.jobs ?? []
+  if (!Array.isArray(data?.jobs)) return []
+  return data.jobs
 }
 
 // MCP servers — static: gateway has no MCP registry endpoint.

@@ -29,6 +29,13 @@ import { CacheEfficiencyCard } from './components/cache-efficiency-card'
 import { CostLedgerCard } from './components/cost-ledger-card'
 import { EditModePanel } from './components/edit-mode-panel'
 import { HeroMetrics } from './components/hero-metrics'
+import {
+  CronPanelCard,
+  McpPanelCard,
+  PersonaChipsCard,
+  PlatformStatusCard,
+  ZapierActionsCard,
+} from './components/hermes-os'
 import { LogsTailCard } from './components/logs-tail-card'
 import { OperatorTipCard } from './components/operator-tip-card'
 import { OpsStrip } from './components/ops-strip'
@@ -46,13 +53,6 @@ import type { AnalyticsPeriod } from './components/analytics-chart-card'
 import type { ReactNode } from 'react'
 import type { ClaudeSession } from '@/server/claude-api'
 import type { DashboardOverview } from '@/server/dashboard-aggregator'
-import {
-  PlatformStatusCard,
-  McpPanelCard,
-  CronPanelCard,
-  PersonaChipsCard,
-  ZapierActionsCard,
-} from './components/hermes-os'
 import { getUnavailableReason } from '@/lib/feature-gates'
 import { cn } from '@/lib/utils'
 import { applyTheme, useSettingsStore } from '@/hooks/use-settings'
